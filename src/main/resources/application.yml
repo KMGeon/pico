@@ -22,3 +22,17 @@ logging:
   level:
     root: INFO
     com.your.package: DEBUG
+
+
+management:
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

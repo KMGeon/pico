@@ -1,0 +1,26 @@
+version: 0.0
+os: linux
+files:
+  - source:  /
+    destination: /home/ubuntu
+    overwrite: yes
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
+hooks:
+  AfterInstall:
+    - location: script/deploy.sh
+      timeout: 180
+      runas: ubuntu
+  ApplicationStart:
+    - location: script/switch.sh
+      timeout: 180
+      runas: ubuntu
+#  ValidateService:
+#    - location: script/validate.sh
+#      timeout: 180
+#      runas: ubuntu
