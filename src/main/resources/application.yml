@@ -13,9 +13,9 @@ server:
 #    password: ${DB_PASSWORD:}
 
 # ?? ??
-app:
-  some-value: ${SOME_VALUE:default_value}
-  override-value: ${override.value:default_override_value}
+#app:
+#  some-value: ${SOME_VALUE:default_value}
+#  override-value: ${override.value:default_override_value}
 
 # ?? ??
 logging:
