@@ -1,1 +1,24 @@
-spring:
+#spring:
+#  profiles:
+#    active: ${ACTIVE_PROFILE:dev}
+
+server:
+  port: 8080
+
+## ?????? ??
+#spring:
+#  datasource:
+#    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:your_db_name}
+#    username: ${DB_USERNAME:root}
+#    password: ${DB_PASSWORD:}
+
+# ?? ??
+app:
+  some-value: ${SOME_VALUE:default_value}
+  override-value: ${override.value:default_override_value}
+
+# ?? ??
+logging:
+  level:
+    root: INFO
+    com.your.package: DEBUG
