@@ -7,7 +7,10 @@ import com.team5.sparcs.pico.domain.QuizVO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,6 +28,14 @@ public class QuizController {
         return quizService.findAll();
     }
 
-
+    @PostMapping("/quiz/finish")
+    public ResponseEntity<QuizService.Scientist> getRecommendation(@RequestBody List<Integer> answers) {
+        try {
+            QuizService.Scientist scientist = quizService.recommendScientist(answers);
+            return ResponseEntity.ok(scientist);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
 }

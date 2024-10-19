@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class ChatBotLLMRequest {
     private String scientistName;
     private String step;
+    private String userInput;
     private String principleDesc;
     private String welcome;
 }
