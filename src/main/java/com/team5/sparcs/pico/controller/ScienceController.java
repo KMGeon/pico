@@ -2,6 +2,7 @@ package com.team5.sparcs.pico.controller;
 
 import com.team5.sparcs.pico.application.ScienceService;
 import com.team5.sparcs.pico.config.Logging;
+import com.team5.sparcs.pico.domain.Scientist;
 import com.team5.sparcs.pico.dto.science.response.MainScienceResponse;
 import com.team5.sparcs.pico.dto.science.response.PrincipleScienceChatbotResponse;
 import com.team5.sparcs.pico.dto.science.response.ScienceDetailResponse;
@@ -11,12 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,27 +27,27 @@ public class ScienceController {
     @GetMapping("/science")
     @Operation(summary = "figma 1", description = "메인 페이지 과학자 이름, 이미지url을 반환한다.")
     public ResponseEntity<List<MainScienceResponse>> selectScientistCard() {
-        var o = new ArrayList<MainScienceResponse>();
-        for (int i = 0; i < 10; i++) {
-            MainScienceResponse scienceResponse = MainScienceResponse.builder()
-                    .ScientistName("name" + i)
-                    .imgUrl("imgUrl" + i)
-                    .build();
+        List<MainScienceResponse> mainScienceResponses = scienceService.selectScientistCard();
+        return ResponseEntity.ok(mainScienceResponses);
+    }
 
-            o.add(scienceResponse);
-        }
-        return ResponseEntity.ok(o);
+    @Logging(action = "POST")
+    @PostMapping("/science")
+    public Scientist createScience(@RequestBody Map<String, String> request) {
+        String name = (String) request.get("name");
+        String url = (String) request.get("imgUrl");
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("name", name);
+        map.put("url", url);
+        return scienceService.createScience(map);
     }
 
     @Logging(action = "GET")
     @GetMapping("/science/detail")
     public ResponseEntity<ScienceDetailResponse> selectScientistDetail(@Parameter(name = "scienceId", description = "과학자 아이디")
                                                                        @RequestParam(value = "scienceId") String scienceId) {
-        ScienceDetailResponse rtn = ScienceDetailResponse.builder()
-                .ScientistName("과학자 이름")
-                .secondDescription("무엇이 궁금하니")
-                .imgUrl("img_url")
-                .build();
+        ScienceDetailResponse rtn = scienceService.selectScientistDetail(scienceId);
         return ResponseEntity.ok(rtn);
     }
 
@@ -67,8 +65,6 @@ public class ScienceController {
 
             chatbotPrinciples.add(principle);
         }
-
-
         PrincipleScienceChatbotResponse rtn = PrincipleScienceChatbotResponse.builder()
                 .scientistName("과학자 이름")
                 .scientistImgUrl("img url")

@@ -26,3 +26,9 @@ public class AiService {
         return openAiChatModel.call(prompt);
     }
 }
+
+/**
+ * 1. 글자 수
+ * 2. 컨셉
+ * 3.
+ */
