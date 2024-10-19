@@ -28,4 +28,10 @@ public class HistoryRepository {
     public long countHistory() {
         return sqlSessionTemplate.selectOne("history.countHistory");
     }
+
+    public ChatBotVO selectHistoryByChatbotId(String chatbotId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("chatbotId", chatbotId);
+        return sqlSessionTemplate.selectOne("history.selectHistoryByChatbotId", map);
+    }
 }

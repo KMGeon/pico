@@ -4,25 +4,26 @@
 <mapper namespace="history">
 
     <select id="selectHistoryWithPaging" resultType="com.team5.sparcs.pico.domain.ChatBotVO" parameterType="map">
-        SELECT
-            a.*,
-            s.imgUrl
-        FROM (
-                 SELECT *
-                 FROM ChatBot
-                 GROUP BY roomId
-             ) AS a
-                 LEFT JOIN Scientist s ON a.scientistName = s.scienceName
-        ORDER BY a.roomId
+        select * from chatbot as a
+                          left join chatbot_summery as b
+                                    on a.chatbot_id = b.chatbot_id
+                          left join Scientist as c
+                                    on a.scientistName = c.scienceName
             LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="countHistory" resultType="long">
-        SELECT COUNT(*)
+        SELECT *
         FROM (
-                 SELECT roomId
-                 FROM ChatBot
-                 GROUP BY roomId
+                 select count(*) from chatbot as a
+                                          left join chatbot_summery as b
+                                                    on a.chatbot_id = b.chatbot_id
+                                          left join Scientist as c
+                                                    on a.scientistName = c.scienceName
              ) AS count_query
+    </select>
+
+    <select id="selectHistoryByChatbotId" resultType="com.team5.sparcs.pico.domain.ChatBotVO" parameterType="map">
+        select * from chatbot_summery where chatbot_id = #{chatbotId}
     </select>
 </mapper>

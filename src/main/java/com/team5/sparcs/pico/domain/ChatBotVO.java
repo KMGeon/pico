@@ -20,4 +20,5 @@ public class ChatBotVO {
     private String chatbot_summery_id;
     private String summery;
     private String summery_chip;
+    private String imgUrl;
 }
