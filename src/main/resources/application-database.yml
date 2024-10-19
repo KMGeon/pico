@@ -14,8 +14,3 @@ spring:
       image:
         options:
           model: dall-e-3
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQL8Dialect

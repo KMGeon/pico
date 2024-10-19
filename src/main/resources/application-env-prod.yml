@@ -9,6 +9,13 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+
 management:
   info:
     java:
