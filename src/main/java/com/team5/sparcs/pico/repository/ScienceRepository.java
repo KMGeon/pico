@@ -31,7 +31,7 @@ public class ScienceRepository {
     public List<ScienceVO> selectChatbotView(String name){
         HashMap<String, Object> param = new HashMap<>();
         param.put("name",name);
-        return sqlSessionTemplate.selectOne("science.selectChatbotView", param);
+        return sqlSessionTemplate.selectList("science.selectChatbotView", param);
     }
 
     public Integer insertRequestChatBotLog(String roomId, String request) {

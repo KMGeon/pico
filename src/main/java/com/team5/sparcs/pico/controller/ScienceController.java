@@ -38,7 +38,8 @@ public class ScienceController {
     @Logging(action = "get")
     @GetMapping("/chatbot")
     public ResponseEntity<ChatbotView> selectChatBotView(@RequestParam(value = "name") String name) {
-        return ResponseEntity.ok(scienceService.selectChatBotView(name));
+        ChatbotView chatbotView = scienceService.selectChatBotView(name);
+        return ResponseEntity.ok(chatbotView);
     }
 
 
@@ -48,6 +49,5 @@ public class ScienceController {
         String rtn = scienceService.insertChatBotLog(chatbotLogRequest);
         return ResponseEntity.ok(rtn);
     }
-
 
 }

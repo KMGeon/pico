@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -19,8 +21,7 @@ public class ScienceService {
 
     private final ScienceRepository scienceRepository;
     private final OpenAiChatModel openAiChatModel;
-
-
+    private final DataSourceTransactionManager transactionManager;
 
 
     public List<ScienceVO> selectScienceFindAll() {
@@ -32,34 +33,37 @@ public class ScienceService {
     }
 
     public ChatbotView selectChatBotView(String name) {
-
-        List<ScienceVO> scienceVOS = scienceRepository.selectChatbotView(name);
-
-        return ChatbotView.fromScienceVOList(scienceVOS);
+        return ChatbotView.fromScienceVOList(scienceRepository.selectChatbotView(name));
     }
 
+    @Transactional
     public String insertChatBotLog(ChatbotLogRequest chatbotLogRequest) {
         String roomId = chatbotLogRequest.roomId();
         String request = chatbotLogRequest.request();
-        Integer i = scienceRepository.insertRequestChatBotLog(roomId, request);
+        String name = chatbotLogRequest.scientistName();
 
-        String chatbotResponse = chatbot(request);
+        scienceRepository.insertRequestChatBotLog(roomId, request);
+        String chatbotResponse = chatbot(request, name);
+
         scienceRepository.insertResponseChatBotLog(roomId, chatbotResponse);
         return chatbotResponse;
     }
 
 
-    public String chatbot(String request) {
+    public String chatbot(String request, String name) {
         PromptTemplate promptTemplate = new PromptTemplate(
-                "당신은 의사야 그래서 환자의 증상을 바탕으로 환저의 병을 예측해줘" +
-                        "환자가 자신의 증상을 말하면 너의 지식으로 잘 최대한 친절하게 알려줘." +
-                        "환자 : 배가 너무 아파요\n" +
+                "당신은 {scientistName} 모든 지식을 전문으로 다뤄." +
+                        "사용자에 말에 일상적인 대화부터 전문적인 지식까지 요청에 따라 답해줘" +
+                        "사용자 : 배가 너무 아파요\n" +
                         "답변 : 배탈인 것 같습니다.\n" +
                         "이런 형식으로 대답해줘\n" +
                         "환자: {message}\n"
         );
 
-        String prompt = String.valueOf(promptTemplate.create(Map.of("message", request)));
+        String prompt = String.valueOf(promptTemplate.create(Map.of(
+                "message", request,
+                "scientistName", name
+        )));
 
         return openAiChatModel.call(prompt);
     }
