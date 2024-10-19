@@ -47,8 +47,7 @@ public class ScienceController {
     @GetMapping("/science/detail")
     public ResponseEntity<ScienceDetailResponse> selectScientistDetail(@Parameter(name = "scienceId", description = "과학자 아이디")
                                                                        @RequestParam(value = "scienceId") String scienceId) {
-        ScienceDetailResponse rtn = scienceService.selectScientistDetail(scienceId);
-        return ResponseEntity.ok(rtn);
+        return ResponseEntity.ok(scienceService.selectScientistDetail(scienceId));
     }
 
     @Logging(action = "GET")
