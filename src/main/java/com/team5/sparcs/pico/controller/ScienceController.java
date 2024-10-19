@@ -4,6 +4,7 @@ import com.team5.sparcs.pico.application.ScienceService;
 import com.team5.sparcs.pico.config.Logging;
 import com.team5.sparcs.pico.dto.chatbot.request.ChatbotLogRequest;
 import com.team5.sparcs.pico.dto.chatbot.response.ChatbotView;
+import com.team5.sparcs.pico.dto.history.HistoryPagingResponse;
 import com.team5.sparcs.pico.dto.science.MainDetailResponse;
 import com.team5.sparcs.pico.dto.science.MainResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,9 +12,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController
@@ -56,4 +59,6 @@ public class ScienceController {
         return ResponseEntity.ok(rtn);
     }
 //    ======================= 도감 ============================
+
+
 }

@@ -15,4 +15,6 @@ public class ChatBotVO {
     private String requestLog;
     private String responseLog;
     private String scientistName;
+    private String createdBy;
+    private String summation;
 }

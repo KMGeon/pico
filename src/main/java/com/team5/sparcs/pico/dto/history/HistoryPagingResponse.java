@@ -11,4 +11,5 @@ public class HistoryPagingResponse {
     private String scientistName;
     private int roomId;
     private String imgUrl;
+    private String createdBy;
 }
