@@ -1,8 +1,21 @@
-hikari:
-  common:
-    max-lifetime: 1620000
-    idle-timeout: 1500000
-    connection-timeout: 30000
-    leak-detection-threshold: 1200000
-    connection-test-query: SELECT 1
-    validation-timeout: 10000
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  ai:
+    openai:
+      api-key: ${AI_KEY}
+      chat:
+        options:
+          model: gpt-4o
+          temperature: 0.7
+      image:
+        options:
+          model: dall-e-3
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect

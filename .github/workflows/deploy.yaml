@@ -5,7 +5,7 @@ on:
       - main
 env:
   S3_BUCKET_NAME: picohkt
-  RESOURCE_PATH: ./src/main/resources/application.yml
+  RESOURCE_PATH: ./src/main/resources/application-database.yml
   CODE_DEPLOY_APPLICATION_NAME: PICO-CODE-DEPLOY-APPLICATION
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: PICO-CODE-DEPLOY-GROUP
 
@@ -20,12 +20,19 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-#      - name: Set yaml file
-#        uses: microsoft/variable-substitution@v1
-#        with:
-#          files: ${{ env.RESOURCE_PATH }}
-#        env:
-#          override.value: ${{ secrets.DI_FROM_SECRET }}
+
+      - name: Set environment variables in application-database.yml
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          AI_KEY: ${{ secrets.AI_KEY }}
+        run: |
+          sed -i 's|${DB_URL}|'"${DB_URL}"'|g' ${{ env.RESOURCE_PATH }}
+          sed -i 's|${DB_USERNAME}|'"${DB_USERNAME}"'|g' ${{ env.RESOURCE_PATH }}
+          sed -i 's|${DB_PASSWORD}|'"${DB_PASSWORD}"'|g' ${{ env.RESOURCE_PATH }}
+          sed -i 's|${AI_KEY}|'"${AI_KEY}"'|g' ${{ env.RESOURCE_PATH }}
+
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash
