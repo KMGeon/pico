@@ -21,9 +21,10 @@ import java.time.LocalDateTime;
 public abstract class BaseEntity {
 
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "img_ig")
     private Long id;
+
 
     @Column(updatable = false, name = "created_at")
     private LocalDateTime createdAt;
