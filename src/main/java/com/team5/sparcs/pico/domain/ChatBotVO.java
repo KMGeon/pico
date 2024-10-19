@@ -10,11 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatBotVO {
-    private Integer roomId;
-    private String step;
-    private String requestLog;
-    private String responseLog;
+    private String chatbot_id;
     private String scientistName;
     private String createdBy;
-    private String summation;
+    private String chatbot_log_id;
+    private String requestLog;
+    private String responseLog;
+    private Integer step;
+    private String chatbot_summery_id;
+    private String summery;
+    private String summery_chip;
 }

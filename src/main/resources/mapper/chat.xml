@@ -1,0 +1,18 @@
+<?mapper version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="chat">
+
+    <select id="save" resultType="com.team5.sparcs.pico.domain.QuizVO">
+        insert into chatbot(chatbot_room_id, scientistName)
+        values (#{chatbotId}, #{scienceName})
+    </select>
+
+    <insert id="saveLog">
+        insert into chatbot_log(requestLog, responseLog, step, chatbot_room_id) values (#{userInput}, #{aiResponse}, #{step}, #{chatRoomId})
+    </insert>
+
+    <select id="findAPIURL" resultType="string">
+        select url from url
+    </select>
+</mapper>

@@ -28,4 +28,12 @@
         insert into ChatBot(roomId, responseLog, scientistName, step) values (#{roomId}, #{response}, #{name}, #{step})
     </insert>
 
+
+    <select id="findPrompt" resultType="com.team5.sparcs.pico.domain.ScienceVO">
+        select * from Principle where scientist_seq = (select seq from Scientist where scienceName = #{name}) and step = #{step}
+    </select>
+
+    <select id="findWelcome" resultType="com.team5.sparcs.pico.domain.ScienceVO">
+        select *  from Scientist where scienceName = #{name}
+    </select>
 </mapper>

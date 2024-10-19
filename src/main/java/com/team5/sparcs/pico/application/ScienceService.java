@@ -5,6 +5,7 @@ import com.team5.sparcs.pico.dto.chatbot.request.ChatbotLogRequest;
 import com.team5.sparcs.pico.dto.chatbot.response.ChatbotView;
 import com.team5.sparcs.pico.dto.science.MainDetailResponse;
 import com.team5.sparcs.pico.dto.science.MainResponse;
+import com.team5.sparcs.pico.repository.ChatRepository;
 import com.team5.sparcs.pico.repository.ScienceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -23,6 +24,7 @@ public class ScienceService {
 
     private final ScienceRepository scienceRepository;
     private final OpenAiChatModel openAiChatModel;
+    private final ChatRepository chatRepository;
 
 
 
@@ -37,24 +39,31 @@ public class ScienceService {
         return MainDetailResponse.of(scienceRepository.selectScienceDetail(name));
     }
 
+    // todo chatbot 생성
+
     public ChatbotView selectChatBotView(String name) {
-        return ChatbotView.fromScienceVOList(scienceRepository.selectChatbotView(name));
+        ChatbotView chatbotView = ChatbotView.fromScienceVOList(scienceRepository.selectChatbotView(name));
+        String chatbotId = chatbotView.chatbotId();
+        String scienceName = chatbotView.scienceName();
+        chatRepository.save(chatbotId, scienceName);
+        return chatbotView;
     }
 
     @Transactional
     public String insertChatBotLog(ChatbotLogRequest chatbotLogRequest) {
-        String chatbotId = chatbotLogRequest.chatbotId();
-        String request = chatbotLogRequest.request();
-        String name = chatbotLogRequest.scientistName();
-        String step = chatbotLogRequest.step();
-
-
-
-        scienceRepository.insertRequestChatBotLog(chatbotId, request, name, step);
-        String chatbotResponse = chatbot(request, name);
-
-        scienceRepository.insertResponseChatBotLog(chatbotId, chatbotResponse, name, step);
-        return chatbotResponse;
+//        String chatbotId = chatbotLogRequest.chatbotId();
+////        String request = chatbotLogRequest.request();
+//        String name = chatbotLogRequest.scientistName();
+//        String step = chatbotLogRequest.step();
+//
+//
+//
+//        scienceRepository.insertRequestChatBotLog(chatbotId, request, name, step);
+//        String chatbotResponse = chatbot(request, name);
+//
+//        scienceRepository.insertResponseChatBotLog(chatbotId, chatbotResponse, name, step);
+//        return chatbotResponse;
+        return null;
     }
 
 

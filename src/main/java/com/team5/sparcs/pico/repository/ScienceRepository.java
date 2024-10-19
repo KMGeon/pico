@@ -53,4 +53,17 @@ public class ScienceRepository {
         param.put("step",step);
         return sqlSessionTemplate.insert("science.insertResponseChatBotLog", param);
     }
+
+    public ScienceVO findPrompt(String name, String step) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("name",name);
+        param.put("step",step);
+        return sqlSessionTemplate.selectOne("science.findPrompt", param);
+    }
+
+    public ScienceVO findWelcome(String name) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("name",name);
+        return sqlSessionTemplate.selectOne("science.findWelcome", param);
+    }
 }
