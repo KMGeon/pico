@@ -10,5 +10,4 @@ public class History extends BaseEntity{
     private Long id;
 
     private String summation;
-
 }

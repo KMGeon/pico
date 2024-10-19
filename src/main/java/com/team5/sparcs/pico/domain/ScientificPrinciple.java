@@ -1,6 +1,8 @@
 package com.team5.sparcs.pico.domain;
 
 
+import jakarta.persistence.*;
+
 @Entity
 public class ScientificPrinciple extends BaseEntity{
 
@@ -15,8 +17,4 @@ public class ScientificPrinciple extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     public Scientist scientist;
-
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
 }
