@@ -1,0 +1,60 @@
+<configuration>
+    <springProfile name="dev">
+        <property name="logPath" value="logs" />
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <Pattern>
+                    %d{yyyy-MM-dd HH:mm:ss} [%-5level] [%X{transactionId}] [%X{request_id}] %msg%n
+                </Pattern>
+            </layout>
+        </appender>
+
+        <appender name="FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${logPath}/pico.log</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>
+                    %d{yyyy-MM-dd HH:mm:ss} [%-5level] [%X{transactionId}] [%X{request_id}] %msg%n
+                </Pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${logPath}/archived/pico.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>50MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <root level="info">
+            <appender-ref ref="FILE-AUDIT" />
+            <appender-ref ref="STDOUT" />
+        </root>
+
+        <logger name="jdbc.sqlonly"        level="OFF"/>
+        <logger name="jdbc.sqltiming"      level="INFO"/>
+        <logger name="jdbc.audit"          level="OFF"/>
+        <logger name="jdbc.resultset"      level="OFF"/>
+        <logger name="jdbc.resultsettable" level="OFF"/>
+        <logger name="jdbc.connection"     level="OFF"/>
+    </springProfile>
+
+    <springProfile name="!dev">
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <layout class="ch.qos.logback.classic.PatternLayout">R
+                <Pattern>
+                    %d{yyyy-MM-dd HH:mm:ss} [%-5level] [%X{transactionId}] [%X{request_id}] %msg%n
+                </Pattern>
+            </layout>
+        </appender>
+        <root level="info">
+            <appender-ref ref="STDOUT" />
+        </root>
+
+        <logger name="jdbc.sqlonly"        level="OFF"/>
+        <logger name="jdbc.sqltiming"      level="INFO"/>
+        <logger name="jdbc.audit"          level="OFF"/>
+        <logger name="jdbc.resultset"      level="OFF"/>
+        <logger name="jdbc.resultsettable" level="OFF"/>
+        <logger name="jdbc.connection"     level="OFF"/>
+    </springProfile>
+</configuration>
