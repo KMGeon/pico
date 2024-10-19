@@ -14,15 +14,29 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
 
-
     @Data
     public static class Scientist {
         String name;
         List<String> descriptions;
+        List<ScientistPair> compatiblePairs;
+        List<ScientistPair> incompatiblePairs;
 
         Scientist(String name, List<String> descriptions) {
             this.name = name;
             this.descriptions = descriptions;
+            this.compatiblePairs = new ArrayList<>();
+            this.incompatiblePairs = new ArrayList<>();
+        }
+    }
+
+    @Data
+    public static class ScientistPair {
+        String name;
+        String reason;
+
+        ScientistPair(String name, String reason) {
+            this.name = name;
+            this.reason = reason;
         }
     }
 
@@ -99,16 +113,48 @@ public class QuizService {
                 Arrays.asList("철학과 과학의 다리", "박학다식한 사색가", "지식의 아버지")));
         SCIENTISTS.put("튜링", new Scientist("앨런 튜링",
                 Arrays.asList("비상한 논리가", "암호 해독의 영웅", "논리적 상상력의 천재")));
+
+        SCIENTISTS.get("아인슈타인").getCompatiblePairs().add(new ScientistPair("뉴턴", "상상력과 천재가 어울림"));
+        SCIENTISTS.get("아인슈타인").getIncompatiblePairs().add(new ScientistPair("다윈", "탐구 영역이 전혀 다르고, 다윈은 점진적 관찰을, 아인슈타인은 급진적 사고를 선호해 차이가 있다"));
+
+        SCIENTISTS.get("다윈").getCompatiblePairs().add(new ScientistPair("갈릴레오", "관찰과 탐구 정신을 공유하며, 끊임없이 변화를 추구하는 공통점을 갖는다"));
+        SCIENTISTS.get("다윈").getIncompatiblePairs().add(new ScientistPair("아인슈타인", "탐구 영역이 전혀 다르고, 다윈은 점진적 관찰을, 아인슈타인은 급진적 사고를 선호해 차이가 있다"));
+
+        SCIENTISTS.get("퀴리").getCompatiblePairs().add(new ScientistPair("튜링", "문제 해결을 위해 헌신하는 면에서 궁합이 좋다. 몰입과 열정이 닮아 있다"));
+        SCIENTISTS.get("퀴리").getIncompatiblePairs().add(new ScientistPair("뉴턴", "연구 스타일이 크게 다르다. 뉴턴은 완벽한 체계를 추구하지만, 퀴리는 위험을 무릅쓰고 새로운 시도를 감행하는 성향이 강하다"));
+
+        SCIENTISTS.get("아리스토텔레스").getCompatiblePairs().add(new ScientistPair("가우스", "똑똑함과 비상함이 어울린다"));
+        SCIENTISTS.get("아리스토텔레스").getIncompatiblePairs().add(new ScientistPair("가우스", "사고방식에서 충돌할 가능성이 크다. 아리스토텔레스는 사변적 접근을 중시하는 반면, 가우스는 정밀함과 수학적 엄밀성을 중시한다"));
+
+        SCIENTISTS.get("갈릴레오").getCompatiblePairs().add(new ScientistPair("다윈", "관찰과 탐구 정신을 공유하며, 끊임없이 변화를 추구하는 공통점을 갖는다"));
+        SCIENTISTS.get("갈릴레오").getIncompatiblePairs().add(new ScientistPair("튜링", "자신의 의견을 말하는 모습과 묵묵히 FM대로 하는 모습이 상반됨"));
+
+        SCIENTISTS.get("뉴턴").getCompatiblePairs().add(new ScientistPair("아인슈타인", "상상력과 천재가 어울림"));
+        SCIENTISTS.get("뉴턴").getIncompatiblePairs().add(new ScientistPair("퀴리", "연구 스타일이 크게 다르다. 뉴턴은 완벽한 체계를 추구하지만, 퀴리는 위험을 무릅쓰고 새로운 시도를 감행하는 성향이 강하다"));
+
+        SCIENTISTS.get("가우스").getCompatiblePairs().add(new ScientistPair("아리스토텔레스", "똑똑함과 비상함이 어울린다"));
+        SCIENTISTS.get("가우스").getIncompatiblePairs().add(new ScientistPair("아리스토텔레스", "사고방식에서 충돌할 가능성이 크다. 아리스토텔레스는 사변적 접근을 중시하는 반면, 가우스는 정밀함과 수학적 엄밀성을 중시한다"));
+
+        SCIENTISTS.get("튜링").getCompatiblePairs().add(new ScientistPair("퀴리", "문제 해결을 위해 헌신하는 면에서 궁합이 좋다. 몰입과 열정이 닮아 있다"));
+        SCIENTISTS.get("튜링").getIncompatiblePairs().add(new ScientistPair("갈릴레오", "자신의 의견을 말하는 모습과 묵묵히 FM대로 하는 모습이 상반됨"));
     }
 
-    public Scientist recommendScientist(List<Integer> userAnswers) {
+    public Map<String, Object> recommendScientist(List<Integer> userAnswers) {
         if (userAnswers.size() != 12) {
             throw new IllegalArgumentException("12개의 답변이 필요합니다.");
         }
 
         resetScores();
         calculateScores(userAnswers);
-        return getTopScientist();
+        Scientist topScientist = getTopScientist();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("name", topScientist.getName());
+        response.put("descriptions", topScientist.getDescriptions());
+        response.put("compatiblePairs", topScientist.getCompatiblePairs());
+        response.put("incompatiblePairs", topScientist.getIncompatiblePairs());
+
+        return response;
     }
 
     private void resetScores() {

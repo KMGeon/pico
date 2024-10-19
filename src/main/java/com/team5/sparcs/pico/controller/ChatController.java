@@ -16,6 +16,4 @@ public class ChatController {
     public String chatbotTalk(@RequestBody ChatbotLogRequest chatbotLogRequest){
         return chatService.chatbotTalk(chatbotLogRequest);
     }
-
-
 }

@@ -42,7 +42,8 @@ public class ChatService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ChatBotLLMRequest> httpRequest = new HttpEntity<>(build, headers);
 
-        String apiUrl = chatRepository.findAPIURL() + "/test";
+        String apiUrl = chatRepository.findAPIURL() + "/get_scientist";
+        System.out.println("apiUrl = " + apiUrl);
 
         ResponseEntity<String> response = sendRequestWithRedirectHandling(apiUrl, httpRequest);
 

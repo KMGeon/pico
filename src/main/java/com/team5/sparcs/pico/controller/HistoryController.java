@@ -21,11 +21,10 @@ public class HistoryController {
     @Operation(summary = "도감", description = "request에는 page만 보내기 기본적으로 데이터 9개를 세팅(size)")
     @GetMapping("/history")
     public ResponseEntity<Page<ChatBotVO>> getHistoryWithPaging(
-            @PageableDefault(size = 2, sort = "roomId") Pageable pageable) {
+            @PageableDefault(size = 3, sort = "roomId") Pageable pageable) {
         Page<ChatBotVO> result = historyService.getHistoryWithPaging(pageable);
         return ResponseEntity.ok(result);
     }
 
 
-//    select * from ChatBot where summation is not null and roomId = 1
 }

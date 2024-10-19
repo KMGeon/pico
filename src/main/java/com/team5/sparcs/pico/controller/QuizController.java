@@ -34,11 +34,14 @@ public class QuizController {
     public ResponseEntity<Map<String, Object>> getRecommendation(@RequestBody List<Integer> answers) {
         logger.info("Receiving recommendation request with {} answers", answers.size());
         try {
-            QuizService.Scientist scientist = quizService.recommendScientist(answers);
+            Map<String, Object> scientistInfo = quizService.recommendScientist(answers);
+
             Map<String, Object> response = new HashMap<>();
-            response.put("name", scientist.getName());
-            response.put("descriptions", scientist.getDescriptions());
-            logger.info("Recommended scientist: {}", scientist.getName());
+            response.put("name", scientistInfo.get("name"));
+            response.put("descriptions", scientistInfo.get("descriptions"));
+            response.put("compatiblePairs", scientistInfo.get("compatiblePairs"));
+            response.put("incompatiblePairs", scientistInfo.get("incompatiblePairs"));
+            logger.info("Recommended scientist: {}", scientistInfo.get("name"));
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             logger.error("Error in recommendation: {}", e.getMessage());
