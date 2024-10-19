@@ -21,7 +21,7 @@ public class ScienceService {
 
     private final ScienceRepository scienceRepository;
     private final OpenAiChatModel openAiChatModel;
-    private final DataSourceTransactionManager transactionManager;
+
 
 
     public List<ScienceVO> selectScienceFindAll() {
