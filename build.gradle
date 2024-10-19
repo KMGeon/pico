@@ -58,6 +58,15 @@ dependencies {
     //actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    //aop
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    //log
+    implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
+
+    //swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 }
 
 dependencyManagement {

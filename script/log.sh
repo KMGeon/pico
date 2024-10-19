@@ -2,7 +2,7 @@
 
 current_datetime=$(date +"%Y%m%d")
 # 원본 로그 파일 이름 (전체 경로 포함)
-original_log="/home/ubuntu/logs/tbnws_admin_back.log"
+original_log="/home/ubuntu/logs/pico.log"
 # 새로운 로그 파일 이름 (날짜와 시간 포함)
 new_log_name="${current_datetime}_$(basename "$original_log")"
 # archived 폴더 경로
