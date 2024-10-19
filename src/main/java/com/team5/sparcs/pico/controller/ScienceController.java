@@ -42,12 +42,10 @@ public class ScienceController {
         return ResponseEntity.ok(chatbotView);
     }
 
-
     @Logging(action = "post")
     @PostMapping("/chatbot")
     public ResponseEntity<String> insertChatBotLog(@RequestBody ChatbotLogRequest chatbotLogRequest){
         String rtn = scienceService.insertChatBotLog(chatbotLogRequest);
         return ResponseEntity.ok(rtn);
     }
-
 }
