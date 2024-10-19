@@ -15,6 +15,7 @@ public class ScienceVO {
     private String description;
     private String imgUrl;
     private String backImg;
+    private String chatImg;
 
     //=========
     private String principleName;
