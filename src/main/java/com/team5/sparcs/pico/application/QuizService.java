@@ -2,6 +2,7 @@ package com.team5.sparcs.pico.application;
 
 import com.team5.sparcs.pico.domain.QuizVO;
 import com.team5.sparcs.pico.repository.QuizRepository;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ public class QuizService {
     private final QuizRepository quizRepository;
 
 
+    @Data
     public static class Scientist {
         String name;
         List<String> descriptions;
