@@ -15,4 +15,8 @@
     <select id="findAPIURL" resultType="string">
         select url from url
     </select>
+
+    <insert id="saveSummery">
+        insert into chatbot_summery (chatbot_id, summery, summery_chip) values (#{chatRoomId}, #{summaryText}, #{summeryChip})
+    </insert>
 </mapper>

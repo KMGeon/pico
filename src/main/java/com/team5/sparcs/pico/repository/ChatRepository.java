@@ -38,4 +38,12 @@ public class ChatRepository {
     public String findAPIURL() {
         return sqlSessionTemplate.selectOne("chat.findAPIURL");
     }
+
+    public Integer saveSummery(String chatRoomId, String summaryText, String summeryChip) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("chatRoomId", chatRoomId);
+        param.put("summaryText", summaryText);
+        param.put("summeryChip", summeryChip);
+        return sqlSessionTemplate.insert("chat.saveSummery", param);
+    }
 }

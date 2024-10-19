@@ -36,4 +36,8 @@
     <select id="findWelcome" resultType="com.team5.sparcs.pico.domain.ScienceVO">
         select *  from Scientist where scienceName = #{name}
     </select>
+
+    <select id="findImageUrlByName"  resultType="com.team5.sparcs.pico.domain.ScienceVO">
+        select imgUrl from Scientist where scienceName = #{name}
+    </select>
 </mapper>

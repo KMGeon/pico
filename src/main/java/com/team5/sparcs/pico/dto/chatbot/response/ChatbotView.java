@@ -12,7 +12,6 @@ public record ChatbotView(
         String chatbotId,
         String scienceName,
         String description,
-        String birthday,
         String imgUrl,
         List<PrincipleView> principleViews
 ) {
@@ -25,7 +24,7 @@ public record ChatbotView(
         ScienceVO firstScience = scienceVOs.get(0);
 
         List<ChatbotView.PrincipleView> principleViews = scienceVOs.stream()
-                .map(vo -> new ChatbotView.PrincipleView(vo.getPrincipleName(), vo.getPrincipleDesc()))
+                .map(vo -> new ChatbotView.PrincipleView(vo.getPrincipleName(), vo.getPrincipleDesc(), vo.getStep()))
                 .collect(Collectors.toList());
 
         return ChatbotView.builder()
@@ -37,7 +36,7 @@ public record ChatbotView(
                 .build();
     }
 
-    public record PrincipleView(String principleName, String principleDesc) {
+    public record PrincipleView(String principleName, String principleDesc, String step) {
     }
     public static String generateChatbotId() {
         return UUID.randomUUID().toString().replace("-", "").substring(0, 10);

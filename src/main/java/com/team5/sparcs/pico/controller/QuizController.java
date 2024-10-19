@@ -3,6 +3,7 @@ package com.team5.sparcs.pico.controller;
 import com.team5.sparcs.pico.application.QuizService;
 import com.team5.sparcs.pico.config.Logging;
 import com.team5.sparcs.pico.domain.QuizVO;
+import com.team5.sparcs.pico.repository.ScienceRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class QuizController {
 
     private final QuizService quizService;
+    private final ScienceRepository scienceRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     @Logging(action = "GET")
@@ -35,13 +37,19 @@ public class QuizController {
         logger.info("Receiving recommendation request with {} answers", answers.size());
         try {
             Map<String, Object> scientistInfo = quizService.recommendScientist(answers);
+            String scientistName = (String) scientistInfo.get("name");
 
             Map<String, Object> response = new HashMap<>();
-            response.put("name", scientistInfo.get("name"));
+            response.put("name", scientistName);
             response.put("descriptions", scientistInfo.get("descriptions"));
             response.put("compatiblePairs", scientistInfo.get("compatiblePairs"));
             response.put("incompatiblePairs", scientistInfo.get("incompatiblePairs"));
-            logger.info("Recommended scientist: {}", scientistInfo.get("name"));
+
+            // 데이터베이스에서 이미지 URL 가져오기
+            String imageUrl = scienceRepository.findImageUrlByName(scientistName);
+            response.put("imageUrl", imageUrl);
+
+            logger.info("Recommended scientist: {} with image URL: {}", scientistName, imageUrl);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             logger.error("Error in recommendation: {}", e.getMessage());

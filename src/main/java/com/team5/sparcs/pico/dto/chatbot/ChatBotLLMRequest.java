@@ -11,21 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatBotLLMRequest {
-    @JsonProperty("chatbotId")
-    private String chatRoomId;
-
     @JsonProperty("scientistName")
     private String scientistName;
 
     @JsonProperty("request")
     private String userInput;
 
-    @JsonProperty("step")
-    private String step;
-
-    @JsonProperty("welcome")
-    private String welcome;
-
-    @JsonProperty("principleDesc")
-    private String principleDesc;
 }

@@ -21,4 +21,5 @@ public class ScienceVO {
     //=========
     private String principleName;
     private String principleDesc;
+    private String step;
 }

@@ -66,4 +66,10 @@ public class ScienceRepository {
         param.put("name",name);
         return sqlSessionTemplate.selectOne("science.findWelcome", param);
     }
+
+    public String findImageUrlByName(String scientistName) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("name",scientistName);
+        return sqlSessionTemplate.selectOne("science.findImageUrlByName", param);
+    }
 }
