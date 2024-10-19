@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 
 @RestController
-public class test {
+public class ProfileController {
 
     @Autowired
     private Environment env;
-
 
     @GetMapping("/profile")
     public String getProfile () {
@@ -21,8 +20,4 @@ public class test {
                 .orElse("");
     }
 
-    @GetMapping("/v1")
-    public String test(){
-        return "1";
-    }
 }
