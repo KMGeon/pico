@@ -42,10 +42,10 @@ public class ScienceService {
         String request = chatbotLogRequest.request();
         String name = chatbotLogRequest.scientistName();
 
-        scienceRepository.insertRequestChatBotLog(roomId, request);
+        scienceRepository.insertRequestChatBotLog(roomId, request, name);
         String chatbotResponse = chatbot(request, name);
 
-        scienceRepository.insertResponseChatBotLog(roomId, chatbotResponse);
+        scienceRepository.insertResponseChatBotLog(roomId, chatbotResponse, name);
         return chatbotResponse;
     }
 

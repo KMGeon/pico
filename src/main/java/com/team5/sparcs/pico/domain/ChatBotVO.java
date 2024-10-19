@@ -16,4 +16,5 @@ public class ChatBotVO {
     private boolean isClickC;
     private String requestLog;
     private String responseLog;
+    private String scientistName;
 }

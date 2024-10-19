@@ -34,18 +34,21 @@ public class ScienceRepository {
         return sqlSessionTemplate.selectList("science.selectChatbotView", param);
     }
 
-    public Integer insertRequestChatBotLog(String roomId, String request) {
+    public Integer insertRequestChatBotLog(String roomId, String request, String name) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("roomId",roomId);
         param.put("request",request);
+        param.put("name",name);
+
         return sqlSessionTemplate.insert("science.insertRequestChatBotLog", param);
     }
 
 
-    public Integer insertResponseChatBotLog(String roomId, String chatbotResponse) {
+    public Integer insertResponseChatBotLog(String roomId, String chatbotResponse, String name) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("roomId",roomId);
         param.put("response", chatbotResponse);
+        param.put("name",name);
         return sqlSessionTemplate.insert("science.insertResponseChatBotLog", param);
     }
 }

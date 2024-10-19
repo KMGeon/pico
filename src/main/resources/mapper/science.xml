@@ -21,10 +21,10 @@
     </select>
 
     <insert id="insertRequestChatBotLog">
-        insert into ChatBot(roomId, requestLog) values (#{roomId}, #{request})
+        insert into ChatBot(roomId, requestLog, scientistName) values (#{roomId}, #{request}, #{name})
     </insert>
 
     <insert id="insertResponseChatBotLog">
-        insert into ChatBot(roomId, responseLog) values (#{roomId}, #{response})
+        insert into ChatBot(roomId, responseLog, scientistName) values (#{roomId}, #{response}, #{name})
     </insert>
 </mapper>
