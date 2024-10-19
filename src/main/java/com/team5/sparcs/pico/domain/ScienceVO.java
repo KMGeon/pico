@@ -13,8 +13,8 @@ public class ScienceVO {
     private Integer seq;
     private String scienceName;
     private String description;
-    private String birthday;
     private String imgUrl;
+    private String backImg;
 
     //=========
     private String principleName;

@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record ChatbotLogRequest (
-        String roomId,
+        String chatbotId,
         String scientistName,
         String request,
         String step

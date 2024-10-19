@@ -3,6 +3,8 @@ package com.team5.sparcs.pico.application;
 import com.team5.sparcs.pico.domain.ScienceVO;
 import com.team5.sparcs.pico.dto.chatbot.request.ChatbotLogRequest;
 import com.team5.sparcs.pico.dto.chatbot.response.ChatbotView;
+import com.team5.sparcs.pico.dto.science.MainDetailResponse;
+import com.team5.sparcs.pico.dto.science.MainResponse;
 import com.team5.sparcs.pico.repository.ScienceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -24,12 +26,15 @@ public class ScienceService {
 
 
 
-    public List<ScienceVO> selectScienceFindAll() {
-        return scienceRepository.selectScienceFindAll();
+    public List<MainResponse> selectScienceFindAll() {
+         return scienceRepository.selectScienceFindAll().stream()
+                 .map(scienceVO -> {
+                     return MainResponse.of(scienceVO);
+                 }).toList();
     }
 
-    public ScienceVO selectScienceDetail(String name) {
-        return scienceRepository.selectScienceDetail(name);
+    public MainDetailResponse selectScienceDetail(String name) {
+        return MainDetailResponse.of(scienceRepository.selectScienceDetail(name));
     }
 
     public ChatbotView selectChatBotView(String name) {
@@ -38,17 +43,17 @@ public class ScienceService {
 
     @Transactional
     public String insertChatBotLog(ChatbotLogRequest chatbotLogRequest) {
-        String roomId = chatbotLogRequest.roomId();
+        String chatbotId = chatbotLogRequest.chatbotId();
         String request = chatbotLogRequest.request();
         String name = chatbotLogRequest.scientistName();
         String step = chatbotLogRequest.step();
 
 
 
-        scienceRepository.insertRequestChatBotLog(roomId, request, name, step);
+        scienceRepository.insertRequestChatBotLog(chatbotId, request, name, step);
         String chatbotResponse = chatbot(request, name);
 
-        scienceRepository.insertResponseChatBotLog(roomId, chatbotResponse, name, step);
+        scienceRepository.insertResponseChatBotLog(chatbotId, chatbotResponse, name, step);
         return chatbotResponse;
     }
 
