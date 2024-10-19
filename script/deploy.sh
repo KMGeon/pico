@@ -63,16 +63,16 @@ cd /home/ubuntu/
 sudo chmod 777 logs
 
 cd /home/ubuntu/logs
-sudo chmod 777 tbnws_admin_back.log
+sudo chmod 777 pico.log
 
 echo "> $IDLE_PROFILE 배포"
 echo "> IDLE_APPLICATION_PATH : $IDLE_APPLICATION_PATH"
 
 
 nohup java -jar \
--Dspring.config.location=classpath:/application.properties,classpath:/application-database.properties,classpath:/application-env-prod.properties \
+-Dspring.config.location=classpath:/application.yml,classpath:/application-database.yml,classpath:/application-env-prod.yml \
 -Dspring.profiles.active=$IDLE_PROFILE \
-$IDLE_APPLICATION_PATH >> /home/ubuntu/logs/tbnws_admin_back.log 2>&1 &
+$IDLE_APPLICATION_PATH >> /home/ubuntu/logs/pico.log 2>&1 &
 
 echo "> $IDLE_PROFILE 10초 후 Health check 시작"
 echo "> curl -s http://localhost:$IDLE_PORT/actuator/health "
