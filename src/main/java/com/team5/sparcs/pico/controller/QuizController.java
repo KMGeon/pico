@@ -25,4 +25,6 @@ public class QuizController {
         return quizService.findAll();
     }
 
+
+
 }

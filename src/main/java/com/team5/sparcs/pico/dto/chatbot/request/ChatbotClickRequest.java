@@ -1,4 +1,4 @@
-package com.team5.sparcs.pico.domain;
+package com.team5.sparcs.pico.dto.chatbot.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatBotVO {
-    private Integer roomId;
+public class ChatbotClickRequest {
     private String step;
-    private String requestLog;
-    private String responseLog;
-    private String scientistName;
+    private boolean isClick;
 }

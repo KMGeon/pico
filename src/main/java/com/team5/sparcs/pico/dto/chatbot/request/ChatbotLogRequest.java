@@ -6,6 +6,7 @@ import lombok.Builder;
 public record ChatbotLogRequest (
         String roomId,
         String scientistName,
-        String request
+        String request,
+        String step
 ){
 }
