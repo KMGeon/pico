@@ -1,0 +1,8 @@
+hikari:
+  common:
+    max-lifetime: 1620000
+    idle-timeout: 1500000
+    connection-timeout: 30000
+    leak-detection-threshold: 1200000
+    connection-test-query: SELECT 1
+    validation-timeout: 10000

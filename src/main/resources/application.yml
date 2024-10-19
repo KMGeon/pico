@@ -1,0 +1,39 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import:
+      - optional:classpath:/application-database.yml
+      - optional:classpath:/application-env-dev.yml
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8080
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: blue
+    import:
+      - optional:classpath:/application-database.yml
+      - optional:classpath:/application-env-prod.yml
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8081
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: green
+    import:
+      - optional:classpath:/application-database.yml
+      - optional:classpath:/application-env-prod.yml
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 8082
