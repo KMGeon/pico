@@ -17,15 +17,5 @@ class ScienceServiceTest {
     @Autowired
     private ScienceService scienceService;
 
-    @Test
-    public void fd() throws Exception{
-        // given
-
-        // when
-        List<MainScienceResponse> mainScienceResponses = scienceService.selectScientistCard();
-
-        // then
-        System.out.println("mainScienceResponses = " + mainScienceResponses);
-    }
 
 }

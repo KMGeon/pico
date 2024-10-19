@@ -20,4 +20,6 @@ public class AiController {
     public String chatbot(@RequestBody Map<String, String> request) {
         return aiService.chatbot(request.get("request"));
     }
+
+
 }

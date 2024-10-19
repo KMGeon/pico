@@ -1,0 +1,30 @@
+<?mapper version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="science">
+
+    <select id="selectScienceFindAll" resultType="com.team5.sparcs.pico.domain.ScienceVO">
+        select * from Scientist
+    </select>
+
+
+    <select id="selectScienceDetail" resultType="com.team5.sparcs.pico.domain.ScienceVO">
+        select * from Scientist where scienceName = #{name}
+    </select>
+
+    <select id="selectChatbotView"  resultType="com.team5.sparcs.pico.domain.ScienceVO">
+        select *
+        from Scientist as a
+                 left join pico.Principle P
+                           on a.seq = P.scientist_seq
+        where a.scienceName = #{name}
+    </select>
+
+    <insert id="insertRequestChatBotLog">
+        insert into ChatBot(roomId, requestLog) values (#{roomId}, #{request})
+    </insert>
+
+    <insert id="insertResponseChatBotLog">
+        insert into ChatBot(roomId, responseLog) values (#{roomId}, #{response})
+    </insert>
+</mapper>

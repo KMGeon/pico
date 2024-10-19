@@ -1,0 +1,22 @@
+package com.team5.sparcs.pico.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ScienceVO {
+    private Integer seq;
+    private String scienceName;
+    private String description;
+    private String birthday;
+    private String imgUrl;
+
+    //=========
+    private String principleName;
+    private String principleDesc;
+}

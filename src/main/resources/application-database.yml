@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${DB_URL}
+    jdbc-url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
@@ -14,3 +14,4 @@ spring:
       image:
         options:
           model: dall-e-3
+
