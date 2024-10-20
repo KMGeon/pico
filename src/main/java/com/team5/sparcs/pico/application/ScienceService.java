@@ -26,8 +26,6 @@ public class ScienceService {
     private final OpenAiChatModel openAiChatModel;
     private final ChatRepository chatRepository;
 
-
-
     public List<MainResponse> selectScienceFindAll() {
          return scienceRepository.selectScienceFindAll().stream()
                  .map(scienceVO -> {
@@ -39,8 +37,6 @@ public class ScienceService {
         return MainDetailResponse.of(scienceRepository.selectScienceDetail(name));
     }
 
-    // todo chatbot 생성
-
     public ChatbotView selectChatBotView(String name) {
         ChatbotView chatbotView = ChatbotView.fromScienceVOList(scienceRepository.selectChatbotView(name));
         String chatbotId = chatbotView.chatbotId();
@@ -48,24 +44,6 @@ public class ScienceService {
         chatRepository.save(chatbotId, scienceName);
         return chatbotView;
     }
-
-    @Transactional
-    public String insertChatBotLog(ChatbotLogRequest chatbotLogRequest) {
-//        String chatbotId = chatbotLogRequest.chatbotId();
-////        String request = chatbotLogRequest.request();
-//        String name = chatbotLogRequest.scientistName();
-//        String step = chatbotLogRequest.step();
-//
-//
-//
-//        scienceRepository.insertRequestChatBotLog(chatbotId, request, name, step);
-//        String chatbotResponse = chatbot(request, name);
-//
-//        scienceRepository.insertResponseChatBotLog(chatbotId, chatbotResponse, name, step);
-//        return chatbotResponse;
-        return null;
-    }
-
 
     public String chatbot(String request, String name) {
         PromptTemplate promptTemplate = new PromptTemplate(

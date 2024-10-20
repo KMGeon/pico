@@ -14,6 +14,4 @@ import java.util.List;
 public class SummaryResponse {
     private String summary;
     private List<String> response;
-
-
 }

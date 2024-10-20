@@ -45,8 +45,25 @@ public class QuizController {
             response.put("compatiblePairs", scientistInfo.get("compatiblePairs"));
             response.put("incompatiblePairs", scientistInfo.get("incompatiblePairs"));
 
+
+
+            String rtn ="";
             // 데이터베이스에서 이미지 URL 가져오기
-            String imageUrl = scienceRepository.findImageUrlByName(scientistName);
+            if (scientistName.equals("아이작 뉴턴")){
+                rtn = "뉴턴";
+            }else if(scientistName.equals("마리 퀴리")){
+                rtn ="마리 퀴리";
+            }else if(scientistName.equals("찰스 다윈")){
+                rtn = "찰스 다윈";
+            }else if (scientistName.equals("갈릴레오 갈릴레이")){
+                rtn = "갈릴레오 갈릴레이";
+            }else if (scientistName.equals("카를 프리드리히 가우스")){
+                rtn  ="가우스";
+            }
+                //카를 프리드리히 가우스
+
+
+            String imageUrl = scienceRepository.findImageUrlByName(rtn);
             response.put("imageUrl", imageUrl);
 
             logger.info("Recommended scientist: {} with image URL: {}", scientistName, imageUrl);

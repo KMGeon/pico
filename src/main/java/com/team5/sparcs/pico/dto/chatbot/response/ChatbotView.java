@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public record ChatbotView(
         String chatbotId,
         String scienceName,
+//        String welcome,
         String description,
         String imgUrl,
         List<PrincipleView> principleViews
@@ -30,6 +31,7 @@ public record ChatbotView(
         return ChatbotView.builder()
                 .chatbotId(generateChatbotId())
                 .scienceName(firstScience.getScienceName())
+//                .welcome(firstScience.getWelcome())
                 .description(firstScience.getDescription())
                 .imgUrl(firstScience.getChatImg())
                 .principleViews(principleViews)

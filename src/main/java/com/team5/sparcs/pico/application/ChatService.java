@@ -11,6 +11,7 @@ import com.team5.sparcs.pico.repository.ScienceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -26,7 +27,11 @@ public class ChatService {
     private final ScienceRepository scienceRepository;
     private final ChatRepository chatRepository;
 
+    private static final String PRINCIPLE_URL = "/scientist";
+    private static final String SUMMERY = "/summery";
 
+
+    @Transactional
     public String chatbotTalk(ChatbotLogRequest request) {
         String name = request.scientistName();
         String step = request.step();
@@ -43,7 +48,7 @@ public class ChatService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ChatBotLLMRequest> httpRequest = new HttpEntity<>(build, headers);
 
-        String apiUrl = chatRepository.findAPIURL() + "/scientist";
+        String apiUrl = chatRepository.findAPIURL() + PRINCIPLE_URL;
         ResponseEntity<String> response = sendRequestWithRedirectHandling(apiUrl, httpRequest);
 
         if (response.getStatusCode().is2xxSuccessful()) {
@@ -75,12 +80,11 @@ public class ChatService {
         return response;
     }
 
+    @Transactional
     public SummaryResponse summery(ChatbotLogRequest request) {
         String name = request.scientistName();
-        String step = request.step();
         String userInput = request.request();
-        String chatRoomId = request.chatbotId();
-        String welcome = scienceRepository.findWelcome(name).getWelcome();
+
 
         ChatBotLLMRequest build = ChatBotLLMRequest.builder()
                 .scientistName(name)
@@ -92,7 +96,7 @@ public class ChatService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<ChatBotLLMRequest> httpRequest = new HttpEntity<>(build, headers);
 
-        String apiUrl = chatRepository.findAPIURL() + "/summery";
+        String apiUrl = chatRepository.findAPIURL() + SUMMERY;
         ResponseEntity<String> response = sendRequestWithRedirectHandling(apiUrl, httpRequest);
 
         if (response.getStatusCode().is2xxSuccessful()) {
@@ -111,11 +115,9 @@ public class ChatService {
 
                 SummaryResponse summaryResponse = new SummaryResponse(summaryText, responseList);
 
-                // 저장 로직 (필요한 경우)
                 for (String summeryChip : responseList) {
                     chatRepository.saveSummery(request.chatbotId(), summaryText, summeryChip);
                 }
-
                 return summaryResponse;
             } catch (Exception e) {
                 throw new RuntimeException("응답 파싱 실패: " + e.getMessage());
