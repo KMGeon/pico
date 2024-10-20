@@ -27,7 +27,7 @@ public class HistoryService {
         return new PageImpl<>(list, pageable, total);
     }
 
-    public ChatBotVO selectHistoryByChatbotId(String chatbotId) {
+    public List<ChatBotVO> selectHistoryByChatbotId(String chatbotId) {
         return historyRepository.selectHistoryByChatbotId(chatbotId);
     }
 }

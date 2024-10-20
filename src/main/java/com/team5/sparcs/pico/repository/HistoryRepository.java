@@ -29,9 +29,9 @@ public class HistoryRepository {
         return sqlSessionTemplate.selectOne("history.countHistory");
     }
 
-    public ChatBotVO selectHistoryByChatbotId(String chatbotId) {
+    public List<ChatBotVO> selectHistoryByChatbotId(String chatbotId) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("chatbotId", chatbotId);
-        return sqlSessionTemplate.selectOne("history.selectHistoryByChatbotId", map);
+        return sqlSessionTemplate.selectList("history.selectHistoryByChatbotId", map);
     }
 }

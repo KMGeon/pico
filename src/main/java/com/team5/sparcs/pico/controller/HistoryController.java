@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -30,17 +33,26 @@ public class HistoryController {
         Page<HistoryPagingResponse> result = historyService.getHistoryWithPaging(pageable);
         return ResponseEntity.ok(result);
     }
-
     @GetMapping("history/detail")
-    public Map<String, String> selectHistoryByChatbotId(@RequestParam(value = "chatbotId")String chatbotId){
-        ChatBotVO chatBotVO = historyService.selectHistoryByChatbotId(chatbotId);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("chatbot_id", chatBotVO.getChatbot_id());
-        map.put("summery", chatBotVO.getSummery());
-        map.put("summery_chip", chatBotVO.getSummery_chip());
+    public Map<String, Object> selectHistoryByChatbotId(@RequestParam(value = "chatbotId") String chatbotId) {
+        List<ChatBotVO> chatBotVOS = historyService.selectHistoryByChatbotId(chatbotId);
 
-        return map;
+        if (chatBotVOS.isEmpty()) {
+            return Collections.emptyMap();
+        }
 
+        ChatBotVO firstChatBot = chatBotVOS.get(0);
+        Map<String, Object> result = new HashMap<>();
+        result.put("chatbot_id", firstChatBot.getChatbot_id());
+        result.put("summery", firstChatBot.getSummery());
+
+        List<String> summeryChips = chatBotVOS.stream()
+                .map(ChatBotVO::getSummery_chip)
+                .collect(Collectors.toList());
+
+        result.put("summery_chips", summeryChips);
+
+        return result;
     }
 
 }

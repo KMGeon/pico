@@ -4,23 +4,64 @@
 <mapper namespace="history">
 
     <select id="selectHistoryWithPaging" resultType="com.team5.sparcs.pico.domain.ChatBotVO" parameterType="map">
-        select * from chatbot as a
-                          left join chatbot_summery as b
-                                    on a.chatbot_id = b.chatbot_id
-                          left join Scientist as c
-                                    on a.scientistName = c.scienceName
+        SELECT
+            a.*,
+            b.chatbot_summery_id,
+            b.summery,
+            b.summery_chip,
+            c.scienceName,
+            c.description,
+            c.imgUrl,
+            c.backImg,
+            c.chatImg,
+            c.welcome
+        FROM
+            chatbot a
+                LEFT JOIN (
+                SELECT
+                    chatbot_id,
+                    chatbot_summery_id,
+                    summery,
+                    summery_chip
+                FROM
+                    chatbot_summery cs1
+                WHERE
+                    chatbot_summery_id = (
+                        SELECT MAX(chatbot_summery_id)
+                        FROM chatbot_summery cs2
+                        WHERE cs2.chatbot_id = cs1.chatbot_id
+                    )
+            ) b ON a.chatbot_room_id = b.chatbot_id
+                LEFT JOIN Scientist c ON a.scientistName = c.scienceName
+        ORDER BY
+            a.chatbot_room_id
             LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="countHistory" resultType="long">
-        SELECT *
-        FROM (
-                 select count(*) from chatbot as a
-                                          left join chatbot_summery as b
-                                                    on a.chatbot_id = b.chatbot_id
-                                          left join Scientist as c
-                                                    on a.scientistName = c.scienceName
-             ) AS count_query
+        select count(*)
+        from (SELECT a.*,
+                     b.chatbot_summery_id,
+                     b.summery,
+                     b.summery_chip,
+                     c.scienceName,
+                     c.description,
+                     c.imgUrl,
+                     c.backImg,
+                     c.chatImg,
+                     c.welcome
+              FROM chatbot a
+                       LEFT JOIN (SELECT chatbot_id,
+                                         chatbot_summery_id,
+                                         summery,
+                                         summery_chip
+                                  FROM chatbot_summery cs1
+                                  WHERE chatbot_summery_id = (SELECT MAX(chatbot_summery_id)
+                                                              FROM chatbot_summery cs2
+                                                              WHERE cs2.chatbot_id = cs1.chatbot_id)) b
+                                 ON a.chatbot_room_id = b.chatbot_id
+                       LEFT JOIN Scientist c ON a.scientistName = c.scienceName) ar
+
     </select>
 
     <select id="selectHistoryByChatbotId" resultType="com.team5.sparcs.pico.domain.ChatBotVO" parameterType="map">
